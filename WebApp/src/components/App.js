@@ -10,7 +10,6 @@ import Profile from "./Profile";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="App">
         <Switch>
           <Route path="/login" exact>
             <Login />
@@ -24,7 +23,6 @@ export default function App() {
             <Profile />
           </Route>
         </Switch>
-      </div>
     </BrowserRouter>
   );
 }

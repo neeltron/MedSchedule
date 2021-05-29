@@ -33,17 +33,27 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="container">
-      <h1>Please sign up or login</h1>
-      <input
-        type="email"
-        name="email"
-        required="required"
-        placeholder="Enter your email"
-        onChange={handleInputOnChange}
-        disabled={isLoggingIn}
-      />
-      <button onClick={login} disabled={isLoggingIn}>Send</button>
+    <div className="login-clean">
+      <form>
+        <h2 className="visually-hidden">Login Form</h2>
+        <div className="illustration">
+            <i className="icon ion-android-alarm-clock"></i>
+            <h2 className="text-center login-title"><strong>ReMedy...</strong></h2>
+        </div>
+        <div className="mb-3"><input
+          type="email"
+          name="email"
+          required="required"
+          placeholder="Enter your email"
+          onChange={handleInputOnChange}
+          disabled={isLoggingIn}
+        /></div>
+        <div className="mb-3"></div>
+        <div className="mb-3">
+            <button className="btn btn-primary d-block w-100" data-bss-hover-animate="rubberBand" onClick={login} disabled={isLoggingIn}>Log In with
+                Magic!</button>
+        </div>
+      </form>
     </div>
   );
 }
