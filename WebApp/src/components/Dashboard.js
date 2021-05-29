@@ -7,7 +7,7 @@ import TimeSlot from "./TimeSlot";
 
 import { db } from "../firebase";
 
-export default function Profile() {
+export default function Dashboard() {
     const [userMetadata, setUserMetadata] = useState();
     const [reminders, setReminders] = useState([]);
     const [medicine, setMedicine] = useState('');
@@ -48,6 +48,22 @@ export default function Profile() {
             history.push("/login");
         })
     }, [history]);
+
+    const handleReminderUpdate = (reminder, index) => {
+        const checkSlotAvailibity = (reminderSlot) => {
+            return reminderSlot.slotNumber === reminder.slotNumber
+        }
+        const prevIndex = reminders.findIndex(checkSlotAvailibity);
+        console.log(prevIndex);
+        if(prevIndex >= 0 && prevIndex !== index) {
+            alert('Slot already filled');
+            // TODO: Handle error
+            return;
+        }
+        const remindersCopy = reminders;
+        remindersCopy[index] = reminder;
+        setReminders(remindersCopy);
+    }
 
     const handleNumberChange = (event) => {
         setSlotNumber(event.target.value);
@@ -104,8 +120,72 @@ export default function Profile() {
         }
     }
 
+    const addReminder = async (event) => {
+        event.preventDefault();
+        if(medicine) {
+            reminders.forEach(async (reminder, index) => {
+                const checkSlotAvailibity = (reminderSlot) => {
+                    return reminderSlot.slotNumber === reminder.slotNumber
+                }
+                console.log(reminder);
+                const prevIndex = reminders.findIndex(checkSlotAvailibity);
+                console.log(prevIndex);
+                if(prevIndex >= 0 && prevIndex !== index) {
+                    alert(`Slot repeated for reminder at ${index+1} position`);
+                    // TODO: Handle error
+                    return;
+                }
+                console.log(reminder);
+                const [hour, minute] = reminder.time.split(':');
+                await fetch(`https://ratificate.us/ReMedy/getCommand.php?time=${hour}${minute}00&slot=${reminder.slotNumber}`, {
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+            });
+            const [hour, minute] = slotTime.split(':');
+            if(hour && minute && slotNumber) {
+                const filteredReminders = reminders.filter(reminder => reminder.slotNumber === slotNumber);
+                if(filteredReminders.length > 0) {
+                    alert('Slot already added')
+                    // TODO: Handle error
+                    return;
+                }
+                await fetch(`https://ratificate.us/ReMedy/getCommand.php?time=${hour}${minute}00&slot=${slotNumber}`, {
+                    mode: "no-cors",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                reminders.push({
+                    slotNumber: slotNumber,
+                    time: slotTime
+                });
+            }
+            
+
+            collectionRef.doc(userMetadata.email).set({
+                medicine, reminders
+            })
+            .then(() => {
+                console.log("Firebase insertion done");
+                setSlotTime('');
+                setSlotNumber('');
+                alert('Reminders updated');
+                // TODO: Handle success message
+            })
+            .catch((error) => {
+                console.error("Error writing document: ", error);
+                // TODO: Handle error
+            });
+        } else {
+            // TODO: Handle error
+        }
+    }
+
     return userMetadata ? <div className="login-clean">
-        <form className="dashForm" method="post">
+        <form className="dashForm">
             <div className="illustration">
                 <i className="icon ion-ios-alarm"></i>
             </div>
@@ -114,8 +194,8 @@ export default function Profile() {
                     <i className="fa fa-medkit"></i>
                     <input className="form-control med-name" type="text" name="medName" placeholder="Name of Medicine" required="" value={medicine} onChange={handleMedicineChange} />
                 </span>
-                {reminders.map(reminder => (
-                    <TimeSlot slot={{number: reminder.slotNumber, time: reminder.time}} />
+                {reminders.map((reminder, index) => (
+                    <TimeSlot key={index} slot={{number: reminder.slotNumber, time: reminder.time}} handleReminderUpdate={handleReminderUpdate} index={index} />
                 ))}
                 <span className="input-group-text med-input-group mb-3">
                     <input className="form-control med-name" type="number" name="slotNumber" placeholder="Slot Number" required="" value={slotNumber} onChange={handleNumberChange} />
@@ -135,7 +215,7 @@ export default function Profile() {
                 <i className="fas fa-plus-circle edit-icon"></i>
             </button>
             <div className="mb-3">
-                <button className="btn btn-primary d-block w-100" data-bss-hover-animate="tada" type="submit">Add
+                <button onClick={addReminder} className="btn btn-primary d-block w-100" data-bss-hover-animate="tada"  disabled={!medicine}>Add
                     Reminder!</button>
             </div>
         </form>
