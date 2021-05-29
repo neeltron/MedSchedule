@@ -1,18 +1,24 @@
 <?php
 
+date_default_timezone_set('Asia/Kolkata');
+
 $link = mysqli_connect("**********", "**********", "**********", "neeltron");
 $sql1 = "SELECT * FROM med WHERE slot = 1 ORDER BY id desc LIMIT 1;";
 $sql2 = "SELECT * FROM med where slot = 2 ORDER BY id desc LIMIT 1;";
 $res1 = mysqli_query($link, $sql1);
+$val = 0;
+
 if (mysqli_num_rows($res1) > 0) {
   while($row = mysqli_fetch_assoc($res1)) {
   	$time = $row['time'];
   	$slot = $row['slot'];
   	$time_updated = strtotime($time);
 	$newTime = date('Hi', $time_updated);
-  	echo $newTime;
-  	if((int) date('Hi') > (int) $newTime) {
-    	echo "1";
+  	if((int) date('Hi') > (int) $newTime + 2) {
+    	$val = 0;
+    }
+  	else if((int) date('Hi') > (int) $newTime) {
+    	$val = 1;  
     }
   }
 }
@@ -23,11 +29,14 @@ if (mysqli_num_rows($res2) > 0) {
   	$slot = $row['slot'];
   	$time_updated = strtotime($time);
 	$newTime = date('Hi', $time_updated);
-  	echo $newTime;
-  	if((int) date('Hi') > (int) $newTime) {
-    	echo "2";
+  	if((int) date('Hi') > (int) $newTime + 2 && $val != 1) {
+    	$val = 0;
+    }
+  	else if((int) date('Hi') > (int) $newTime && $val != 1) {
+    	$val = 2;
     }
   }
 }
+echo $val;
 
 ?>
