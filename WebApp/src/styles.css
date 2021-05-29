@@ -120,3 +120,24 @@ input.full-width {
   opacity: 1;
   text-decoration: none;
 }
+
+
+.med-name {
+  border-style: none;
+}
+
+.med-time {
+  border-radius: 4px;border-width: 1px;border-style: none;
+}
+
+.med-input-group {
+  background: rgb(247,249,252);
+}
+
+.med-input-group--reminder {
+  background-color: #fbb7c4!important;
+}
+
+.med-input--reminder {
+  background-color: #fee7eb!important;
+}

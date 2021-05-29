@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 // Views
 import Login from "./Login";
 import Callback from "./Callback";
-import Profile from "./Profile";
+import Dashboard from "./Dashboard";
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
           </Route>
 
           <Route path="*">
-            <Profile />
+            <Dashboard />
           </Route>
         </Switch>
     </BrowserRouter>
