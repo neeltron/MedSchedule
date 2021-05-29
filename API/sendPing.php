@@ -29,10 +29,10 @@ if (mysqli_num_rows($res2) > 0) {
   	$slot = $row['slot'];
   	$time_updated = strtotime($time);
 	$newTime = date('Hi', $time_updated);
-  	if((int) date('Hi') > (int) $newTime + 2) {
+  	if((int) date('Hi') > (int) $newTime + 2 && $val != 1) {
     	$val = 0;
     }
-  	else if((int) date('Hi') > (int) $newTime) {
+  	else if((int) date('Hi') > (int) $newTime && $val != 1) {
     	$val = 2;
     }
   }
