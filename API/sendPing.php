@@ -8,8 +8,10 @@ if (mysqli_num_rows($res1) > 0) {
   while($row = mysqli_fetch_assoc($res1)) {
   	$time = $row['time'];
   	$slot = $row['slot'];
-  	echo date('Hi');
-  	if((int) date('Hi') >= 2300) {
+  	$time_updated = strtotime($time);
+	$newTime = date('Hi', $time_updated);
+  	echo $newTime;
+  	if((int) date('Hi') > (int) $newTime) {
     	echo "1";
     }
   }
@@ -19,7 +21,10 @@ if (mysqli_num_rows($res2) > 0) {
   while($row = mysqli_fetch_assoc($res2)) {
   	$time = $row['time'];
   	$slot = $row['slot'];
-  	if((int) date('Hi') > 2300) {
+  	$time_updated = strtotime($time);
+	$newTime = date('Hi', $time_updated);
+  	echo $newTime;
+  	if((int) date('Hi') > (int) $newTime) {
     	echo "2";
     }
   }
