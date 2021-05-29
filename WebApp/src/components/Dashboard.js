@@ -65,6 +65,12 @@ export default function Profile() {
         const [hour, minute] = slotTime.split(':');
         if(medicine && hour && minute && slotNumber) {
             console.log(hour, minute, slotNumber);
+            const filteredReminders = reminders.filter(reminder => reminder.slotNumber === slotNumber);
+            if(filteredReminders.length > 0) {
+                alert('Slot already added')
+                // TODO: Handle error
+                return;
+            }
             fetch(`https://ratificate.us/ReMedy/getCommand.php?time=${hour}${minute}00&slot=${slotNumber}`, {
                 mode: "no-cors",
                 headers: {
