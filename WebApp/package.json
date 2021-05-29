@@ -1,7 +1,7 @@
 {
   "name": "ReMedy",
   "version": "0.1.0",
-  "description": "A React + JS app with Magic passwordless authentication.",
+  "description": "An app to set reminders for medicines",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
