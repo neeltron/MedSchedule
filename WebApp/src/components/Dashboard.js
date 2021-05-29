@@ -27,9 +27,8 @@ export default function Profile() {
                 collectionRef.doc(metaData.email).onSnapshot(reminderDoc => {
                     if(reminderDoc.exists) {
                         console.log(reminderDoc.data());
-                        if(medicine && reminderDoc.data().medicine === medicine) {
-                            setReminders(reminderDoc.data().reminders);
-                        }
+                        setMedicine(reminderDoc.data().medicine);
+                        setReminders(reminderDoc.data().reminders);
                     }
                 });
             });

@@ -16,16 +16,16 @@ export default function TimeSlot(props) {
     const handleTimeChange = (event) => {
         setSlotTime(event.target.value);
     }
-  return (
-    <>
-        <span class="input-group-text med-input-group--reminder mb-3">
-            <input class="form-control med-name med-input--reminder" type="number" name="slotNumber" placeholder="Slot Number" required="" value={slotNumber} onChange={handleNumberChange} />
-        </span>
-        <span id="slot" class="input-group-text time med-input-group--reminder mb-3">
-            <i class="icon ion-ios-alarm"></i>
-            <input class="form-control med-time med-input--reminder" type="time" required="" value={slotTime} onChange={handleTimeChange} />
-        </span>
-    </>
-  );
+    return (
+        <>
+            <span class="input-group-text med-input-group--reminder mb-3">
+                <input class="form-control med-name med-input--reminder" type="number" name="slotNumber" placeholder="Slot Number" required="" value={slotNumber} onChange={handleNumberChange} />
+            </span>
+            <span id="slot" class="input-group-text time med-input-group--reminder mb-3">
+                <i class="icon ion-ios-alarm"></i>
+                <input class="form-control med-time med-input--reminder" type="time" required="" value={slotTime} onChange={handleTimeChange} />
+            </span>
+        </>
+    );
 }
 
