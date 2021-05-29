@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useHistory } from "react-router";
 import { magic } from "../magic";
-import axios from "axios";
 import Loading from "./Loading";
 import TimeSlot from "./TimeSlot";
 
@@ -56,8 +57,12 @@ export default function Dashboard() {
         const prevIndex = reminders.findIndex(checkSlotAvailibity);
         console.log(prevIndex);
         if(prevIndex >= 0 && prevIndex !== index) {
-            alert('Slot already filled');
-            // TODO: Handle error
+            toast.error('Slot already filled', {
+                position: "top-center",
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+            });
             return;
         }
         const remindersCopy = reminders;
@@ -83,8 +88,12 @@ export default function Dashboard() {
             console.log(hour, minute, slotNumber);
             const filteredReminders = reminders.filter(reminder => reminder.slotNumber === slotNumber);
             if(filteredReminders.length > 0) {
-                alert('Slot already added')
-                // TODO: Handle error
+                toast.error('Slot already added', {
+                    position: "top-center",
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
                 return;
             }
             fetch(`https://ratificate.us/ReMedy/getCommand.php?time=${hour}${minute}00&slot=${slotNumber}`, {
@@ -109,14 +118,29 @@ export default function Dashboard() {
                 })
                 .catch((error) => {
                     console.error("Error writing document: ", error);
-                    // TODO: Handle error
+                    toast.error('Something went wrong', {
+                        position: "top-center",
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 });
             }).catch(err => {
                 console.error(err);
-                // TODO: Handle error
+                toast.error('Something went wrong', {
+                    position: "top-center",
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             })
         } else {
-            // TODO: Handle error
+            toast.error('Please enter the medicine name and other details', {
+                position: "top-center",
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 
@@ -131,8 +155,12 @@ export default function Dashboard() {
                 const prevIndex = reminders.findIndex(checkSlotAvailibity);
                 console.log(prevIndex);
                 if(prevIndex >= 0 && prevIndex !== index) {
-                    alert(`Slot repeated for reminder at ${index+1} position`);
-                    // TODO: Handle error
+                    toast.error(`Slot repeated for reminder at ${index+1} position`, {
+                        position: "top-center",
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                     return;
                 }
                 console.log(reminder);
@@ -148,8 +176,12 @@ export default function Dashboard() {
             if(hour && minute && slotNumber) {
                 const filteredReminders = reminders.filter(reminder => reminder.slotNumber === slotNumber);
                 if(filteredReminders.length > 0) {
-                    alert('Slot already added')
-                    // TODO: Handle error
+                    toast.error('Slot already added', {
+                        position: "top-center",
+                        closeOnClick: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                     return;
                 }
                 await fetch(`https://ratificate.us/ReMedy/getCommand.php?time=${hour}${minute}00&slot=${slotNumber}`, {
@@ -172,19 +204,47 @@ export default function Dashboard() {
                 console.log("Firebase insertion done");
                 setSlotTime('');
                 setSlotNumber('');
-                alert('Reminders updated');
-                // TODO: Handle success message
+                toast.success('Reminders updated', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             })
             .catch((error) => {
                 console.error("Error writing document: ", error);
-                // TODO: Handle error
+                toast.error('Something went wrong', {
+                    position: "top-center",
+                    closeOnClick: true,
+                    draggable: true,
+                    progress: undefined,
+                });
             });
         } else {
-            // TODO: Handle error
+            toast.error('Please enter the medicine name', {
+                position: "top-center",
+                closeOnClick: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 
     return userMetadata ? <div className="login-clean">
+        <ToastContainer
+            position="top-center"
+            autoClose={10000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
         <form className="dashForm">
             <div className="illustration">
                 <i className="icon ion-ios-alarm"></i>
