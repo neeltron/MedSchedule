@@ -4,7 +4,13 @@ ReMedy is a tool that'll remind you to take your medicines according to the sche
 
 The NodeMCU constantly pings our web server for the slot and time to open it and when it's time, NodeMCU triggers the servomechanism according to the time and slots.
 
-# Installation
+## Hardware Used
+<ul>
+  <li>NodeMCU</li>
+  <li>Servo Motors x 2</li>
+</ul>
+
+## Installation
 Installing Arduino IDE:
 <ol>
   <li>Download the latest version of Arduino IDE for your Operating System from their website: https://www.arduino.cc/en/Main/Software</li>
