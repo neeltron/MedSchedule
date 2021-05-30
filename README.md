@@ -1,10 +1,13 @@
 # ReMedy
 
+ReMedy is a tool that'll remind you to take your medicines according to the schedule. Along with that, it'll also dispense the medicine(s) for you. It'll be beneficial for people that can't keep track of their medicines (mostly the elderly).
+
+The NodeMCU constantly pings our web server for the slot and time to open it and when it's time, NodeMCU triggers the servomechanism according to the time and slots.
+
 # Installation
 Installing Arduino IDE:
 <ol>
-  <li>Download and install java from their website: https://www.java.com/en/download/ </li>
-  <li>Download the latest version of Arduino IDE for your Operating System from their website: https://www.arduino.cc/en/Main/Software </li>
+  <li>Download the latest version of Arduino IDE for your Operating System from their website: https://www.arduino.cc/en/Main/Software</li>
   <li>Open the location where the zip file for Arduino was downloaded, and unzip this folder to your desired location</li>
   <li>Start the Arduino IDE from the unzipped folder</li>
 </ol>
